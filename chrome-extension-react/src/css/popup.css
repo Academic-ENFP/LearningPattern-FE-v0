@@ -1,0 +1,15 @@
+#newTab {
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+    margin-right: -4px;
+    color: white;
+    background-color: skyblue;
+}
+
+#select {
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+    margin-right: -4px;
+    color: white;
+    background-color: skyblue;
+}
