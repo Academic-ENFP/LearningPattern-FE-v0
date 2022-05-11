@@ -15,7 +15,7 @@ function Home() {
                     </div>
             </div>
             <div className="mydocument">
-                <div className="main_title">내 문서함</div>
+                <p className="main_title">내 문서함</p>
                     <div className="memo">
                         <div className="memo_title">메모</div>
                         <div id="button">

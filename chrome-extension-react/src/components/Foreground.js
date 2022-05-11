@@ -9,7 +9,7 @@ function Foreground() {
 }
 
 const styles = {
-        main: {
+    main: {
         position: 'absolute',
         top: '50%',
         left: '50%',

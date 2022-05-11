@@ -1,14 +1,15 @@
 .nav {
-    position: absolute;
+    position: relative;
     width: 317px;
     height: 1024px;
     left: 0px;
     top: 0px;
+    float: left;
     background: #FFEFEF;
 }
 
 .nav_title {
-    position: absolute;
+    position: relative;
     width: 215px;
     height: 105px;
     left: 73px;
@@ -26,11 +27,11 @@
 }
 
 #signout_link {
-    position: absolute;
+    position: relative;
     width: 60px;
     height: 21px;
-    left: 79px;
-    top: 967px;
+    left: 70px;
+    top: 850px;
 
     font-family: 'Work Sans';
     font-style: normal;
@@ -43,11 +44,11 @@
 }
 
 #home_link {
-    position: absolute;
+    position: relative;
     width: 51px;
     height: 21px;
-    left: 214px;
-    top: 967px;
+    left: 140px;
+    top: 850px;
 
     font-family: 'Work Sans';
     font-style: normal;
@@ -60,12 +61,13 @@
 
 }
 
+
 .main_title {
-    position: absolute;
-    width: 232px;
+    position: relative;
+    /* width: 232px;
     height: 57px;
     left: 414px;
-    top: 72px;    
+    top: 72px;     */
 
     font-family: 'Work Sans';
     font-style: normal;
@@ -81,11 +83,11 @@
 }
 
 .memo_title {
-    position: absolute;
-    width: 261px;
+    position: relative;
+    /* width: 261px;
     height: 35px;
     left: 337px;
-    top: 197px;
+    top: 197px; */
 
     font-family: 'Work Sans';
     font-style: normal;
@@ -99,11 +101,12 @@
 }
 
 #newMemo {
-    position: absolute;
+    position: relative;
     width: 255px;
     height: 281px;
-    left: 391px;
-    top: 255px;
+    left: 80px;
+    top: 70px;
+    float: left;
 
     background: #FFFFFF;
     border: 1px solid #C4C4C4;
@@ -112,11 +115,10 @@
 }
 
 #memo1 {
-    position: absolute;
-    width: 255px;
-    height: 281px;
-    left: 705px;
-    top: 255px;
+    position: relative;
+
+    left: 80px;
+    top: 70px;
     
     background: #FFFFFF;
     border: 1px solid #C4C4C4;
