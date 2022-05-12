@@ -11,7 +11,7 @@ function Home() {
                 <div className="nav_title">lecmind</div>
                     <div className="link">                    
                         <a href="signin.html" id="signout_link">Signout</a>
-                        <a href="home.html" id="home_link">Home</a>
+                        {/* <a href="home.html" id="home_link">Home</a> */}
                     </div>
             </div>
             <div className="mydocument">
@@ -30,7 +30,7 @@ function Home() {
                 </div>
             </div>
         </div>
-    )
-}
+    );
+};
 
 export default Home;

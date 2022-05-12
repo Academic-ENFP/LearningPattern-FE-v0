@@ -1,10 +1,12 @@
 import React from "react";
 import { render } from "react-dom";
 import '../../css/popup.css';
+import Home from "../Home/Home.js";
+import { BrowserRouter as Router, Switch, Route, Link} from "react-router-dom";
 
 function opennewTab() {
     chrome.tabs.create({
-        url: 'home.html'
+        url: "/"
     });
 }
 
