@@ -13,14 +13,6 @@ module.exports = {
         popup: path.resolve(__dirname, './src/popup.jsx'),
         options: path.resolve(__dirname, './src/options.jsx'),
         foreground: path.resolve(__dirname, './src/foreground.jsx'),
-        memo: path.resolve(__dirname, './src/memo.jsx'),
-        video: path.resolve(__dirname, './src/video.jsx'),
-        learningpage: path.resolve(__dirname, './src/learningpage.jsx'),
-        home: path.resolve(__dirname, './src/home.jsx'),
-        result: path.resolve(__dirname, './src/result.jsx'),
-        timestamp: path.resolve(__dirname, './src/timestamp.jsx'),
-        signin: path.resolve(__dirname, './src/signin.jsx'),
-        app: path.resolve(__dirname, './src/app.jsx')
     },
     output: {
         path: path.resolve(__dirname, 'dist'),
@@ -70,46 +62,6 @@ module.exports = {
             template: './src/foreground.html',
             filename: 'foreground.html',
             chunks: ['foreground']
-        }),
-        new HtmlWebpackPlugin({
-            template: './src/memo.html',
-            filename: 'memo.html',
-            chunks: ['memo']
-        }),
-        new HtmlWebpackPlugin({
-            template: './src/video.html',
-            filename: 'video.html',
-            chunks: ['video']
-        }),
-        new HtmlWebpackPlugin({
-            template: './src/learningpage.html',
-            filename: 'learningpage.html',
-            chunks: ['learningpage']
-        }),
-        new HtmlWebpackPlugin({
-            template: './src/home.html',
-            filename: 'home.html',
-            chunks: ['home']
-        }),
-        new HtmlWebpackPlugin({
-            template: './src/result.html',
-            filename: 'result.html',
-            chunks: ['result']
-        }),
-        new HtmlWebpackPlugin({
-            template: './src/signin.html',
-            filename: 'signin.html',
-            chunks: ['signin']
-        }),
-        new HtmlWebpackPlugin({
-            template: './src/timestamp.html',
-            filename: 'timestamp.html',
-            chunks: ['timestamp']
-        }),
-        new HtmlWebpackPlugin({
-            template: './src/app.html',
-            filename: 'app.html',
-            chunks: ['app']
         }),
         new CopyPlugin({ // build할 때 경로에 있는 파일을 dist 폴더에 복사하기 위한 plugin
             patterns: [
