@@ -7,7 +7,7 @@ import Result from "./Result/Result.js"
 import LearningPage from "./LearningPage/LearningPage.js";
 import Timestamp from "./Timestamp/Timestamp.js"
 
-function App() {
+function Index() {
     return (
         <Router>
             <Switch>
@@ -27,4 +27,4 @@ function App() {
     )
 }
 
-export default App;
+export default Index;

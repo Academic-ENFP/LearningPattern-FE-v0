@@ -1,10 +1,21 @@
-import React from "react";
+import {useEffect, useState} from "react";
 import { render } from "react-dom";
-import { Router, Link, Route, Switch } from "react-router-dom"
+import { useParams } from "react-router-dom"
 import Signin from "../Signin/Signin";
 import '../../css/home.css'
 
+//강의 목록 GET
+function getLectureList(){
+    const res = fetch('URL');
+    return res.json()
+}
+
+
+//내 문서함(home) 페이지
 function Home() {
+    var list;
+    list = getLectureList();
+
     return (
         <div className="home">
             <div className="nav">
@@ -26,7 +37,7 @@ function Home() {
                     </div>
                 <div className="lecture">
                     <div className="lecture_title">강의</div>
-                    <a href="timestamp.html" id="lecture1">고등 예비과정 수학1</a>
+                    <a href="timestamp.html" id="lecture1">{list[0].lecture-name}</a>
                 </div>
             </div>
         </div>

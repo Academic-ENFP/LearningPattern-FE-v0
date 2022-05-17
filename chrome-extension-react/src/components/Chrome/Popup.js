@@ -2,13 +2,27 @@ import React from "react";
 import { render } from "react-dom";
 import '../../css/popup.css';
 
+//내 문서함(home) function
 function opennewTab() {
     chrome.tabs.create({
         url: 'home.html'
     });
 }
 
+
 function selectVideo() {
+
+    //강의 영상 선택 POST
+    fetch("URL", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+    }).then(res => {
+        return res.json()
+    })
+
     videos = document.getElementsByTagName('video')
     if (videos.length() != 0) {
         for (v = 0; v < videos.length(); v++){
@@ -25,15 +39,15 @@ function selectVideo() {
             new_div.style.width = width;
             new_div.style.height = height;
             new_div.style.zIndex = 2147483646;
-            new_div.style.position = absolute;
-            new_div.style.display = flex;
-            new_div.style.justifyContent = center;
-            new_div.style.alignItems = center;
-            new_div.style.overflow = hidden;
+            new_div.style.position = 'absolute';
+            new_div.style.display = 'flex';
+            new_div.style.justifyContent = 'center';
+            new_div.style.alignItems = 'center';
+            new_div.style.overflow = 'hidden';
             
             // z-index, 투명도 지정하기, 위치조정
-            // var new_btn = document.createElement('button');
-            // new_btn.innerHTML = '<bytton id="lecture_select_btn">선택</button>';
+            var new_btn = document.createElement('button');
+            new_btn.innerHTML = '<bytton id="lecture_select_btn">선택</button>';
         }
     }
     // $(function(){
@@ -55,7 +69,7 @@ function Popup() { //popup을 호출할 react component 정의
 
     return (
         <div className="popup">
-            <button id="newTab">new tab</button>
+            <button id="newTab">New tab</button>
             <button id="select">video select</button>
         </div>
     )
