@@ -1,7 +1,6 @@
 import React from "react";
 import { render } from "react-dom";
-import Memo from "./Memo.js";
-import Video from "./Video.js";
+import "./LearningPage.css"
 
 function LearningPage(){
     return (

@@ -4,18 +4,23 @@ const CopyPlugin = require("copy-webpack-plugin");
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
 module.exports = {
-    mode: 'development',
+    mode: 'production',
     devServer: {
         static: path.resolve(__dirname, './src'), //contentBase에서 static으로 바뀜
         historyApiFallback: true
     },
     entry: {
-        popup: path.resolve(__dirname, './src/popup.jsx'),
-        options: path.resolve(__dirname, './src/options.jsx'),
-        foreground: path.resolve(__dirname, './src/foreground.jsx'),
+        memo: path.resolve(__dirname, './src/components/LearningPage/Memo.js'),
+        video: path.resolve(__dirname, './src/components/LearningPage/Video.js'),
+        learningpage: path.resolve(__dirname, './src/components/LearningPage/Learningpage.js'),
+        home: path.resolve(__dirname, './src/components/Home/Home.js'),
+        result: path.resolve(__dirname, './src/components/Result/Result.js'),
+        timestamp: path.resolve(__dirname, './src/components/Timestamp/Timestamp.js'),
+        signin: path.resolve(__dirname, './src/components/Signin/signin.js'),
+        app: path.resolve(__dirname, './src/App.js')
     },
     output: {
-        path: path.resolve(__dirname, 'dist'),
+        path: path.resolve(__dirname, 'dist/static/js'),
         filename: '[name].bundle.js',
     },
     module: {
@@ -48,68 +53,10 @@ module.exports = {
     },
 
     plugins: [
-        new HtmlWebpackPlugin({ 
-            template: './src/popup.html',
-            filename: 'popup.html',
-            chunks: ['popup']
+        new HtmlWebpackPlugin({
+            template: './public/index.html', // public/index.html 파일을 읽는다.
+            filename: 'index.html' // output으로 출력할 파일은 index.html 이다.
         }),
-        new HtmlWebpackPlugin({ 
-            template: './src/options.html',
-            filename: 'options.html',
-            chunks: ['options']
-        }),
-        new HtmlWebpackPlugin({ 
-            template: './src/foreground.html',
-            filename: 'foreground.html',
-            chunks: ['foreground']
-        }),
-        // new HtmlWebpackPlugin({
-        //     template: './src/memo.html',
-        //     filename: 'memo.html',
-        //     chunks: ['memo']
-        // }),
-        // new HtmlWebpackPlugin({
-        //     template: './src/video.html',
-        //     filename: 'video.html',
-        //     chunks: ['video']
-        // }),
-        // new HtmlWebpackPlugin({
-        //     template: './src/learningpage.html',
-        //     filename: 'learningpage.html',
-        //     chunks: ['learningpage']
-        // }),
-        // new HtmlWebpackPlugin({
-        //     template: './src/home.html',
-        //     filename: 'home.html',
-        //     chunks: ['home']
-        // }),
-        // new HtmlWebpackPlugin({
-        //     template: './src/result.html',
-        //     filename: 'result.html',
-        //     chunks: ['result']
-        // }),
-        // new HtmlWebpackPlugin({
-        //     template: './src/signin.html',
-        //     filename: 'signin.html',
-        //     chunks: ['signin']
-        // }),
-        // new HtmlWebpackPlugin({
-        //     template: './src/timestamp.html',
-        //     filename: 'timestamp.html',
-        //     chunks: ['timestamp']
-        // }),
-        // new HtmlWebpackPlugin({
-        //     template: './src/app.html',
-        //     filename: 'app.html',
-        //     chunks: ['app']
-        // }),
-        // new CopyPlugin({ // build할 때 경로에 있는 파일을 dist 폴더에 복사하기 위한 plugin
-        //     patterns: [
-        //       { from: 'public/manifest.json', to: '[name][ext]' },
-        //       { from: 'src/background.js', to: '[name][ext]' },
-        //       { from: 'src/inject_script.js', to: '[name][ext]' },
-        //     ],
-        // }),
         new CleanWebpackPlugin()
     ],
     performance: { //mode 오류 제거

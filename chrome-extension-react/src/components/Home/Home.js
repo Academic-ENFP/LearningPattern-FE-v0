@@ -1,8 +1,8 @@
-import React from "react";
+import React from "react"
+import "./Home.css"
 import { render } from "react-dom";
 import { Router, Link, Route, Switch } from "react-router-dom"
 import Signin from "../Signin/Signin";
-import '../../css/home.css'
 
 function Home() {
     return (

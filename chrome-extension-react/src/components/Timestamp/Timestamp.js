@@ -2,7 +2,7 @@ import React from "react";
 import { render } from "react-dom";
 import Memo from "../LearningPage/Memo.js";
 import Video from "../LearningPage/Video.js";
-import '../../css/timestamp.css'
+import './Timestamp.css'
 
 function Timestamp() {
     return (

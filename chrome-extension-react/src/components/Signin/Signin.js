@@ -1,6 +1,6 @@
 import React from "react";
 import { render } from "react-dom";
-import '../../css/signin.css'
+import './Signin.css'
 
 function Signin() {
     return (

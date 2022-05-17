@@ -1,6 +1,6 @@
 import React from "react";
 import { render } from "react-dom";
-import '../../css/memo.css'
+import "./Memo.css"
 
 //innerHTML쓰면 팝업 안에 memo.html 넣고 player.html 넣으면 되는건가 ,,,,?
 
