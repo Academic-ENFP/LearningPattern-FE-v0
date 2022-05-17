@@ -12,9 +12,7 @@ function Memo() {
             "Content-Type": "application/json",
         },
         body: JSON.stringify(data),
-    }).then(res => {
-        return res.json()
-    })
+    }).then(res => res.json())
     
     return (
         <div class="container">

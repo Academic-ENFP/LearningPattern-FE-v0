@@ -21,9 +21,7 @@ function Video() {
               "Content-Type": "application/json",
             },
             body: JSON.stringify(data),
-        }).then(res => {
-            return res.json()
-        })
+        }).then(res => res.json())
     })
 
     //강의 일시정지 POST
@@ -34,9 +32,7 @@ function Video() {
                 "Content-Type": "application/json",
             },
             body: JSON.stringify(data),
-        }).then(res => {
-            return res.json()
-        })
+        }).then(res => res.json())
     })
 
     //강의 되돌리기 POST
@@ -47,9 +43,7 @@ function Video() {
               "Content-Type": "application/json",
             },
             body: JSON.stringify(data),
-        }).then(res => {
-            return res.json()
-        })
+        }).then(res => res.json())
     })
 
     //강의 넘기기 POST
@@ -60,9 +54,7 @@ function Video() {
               "Content-Type": "application/json",
             },
             body: JSON.stringify(data),
-        }).then(res => {
-            return res.json()
-        })
+        }).then(res => res.json())
     })
 
     //강의 종료 집중도, 집중도가 낮은 GET

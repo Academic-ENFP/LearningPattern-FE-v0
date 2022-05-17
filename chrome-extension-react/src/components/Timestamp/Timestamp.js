@@ -14,9 +14,7 @@ function Timestamp() {
             "Content-Type": "application/json",
         },
         body: JSON.stringify(data),
-    }).then(res => {
-        return res.json()
-    })
+    }).then(res => res.json())
 
     //집중도가 낮은 GET
 
