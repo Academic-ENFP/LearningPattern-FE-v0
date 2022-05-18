@@ -20,7 +20,7 @@ module.exports = {
         app: path.resolve(__dirname, './src/App.js')
     },
     output: {
-        path: path.resolve(__dirname, 'dist/static/js'),
+        path: path.resolve(__dirname, 'dist'),
         filename: '[name].bundle.js',
     },
     module: {

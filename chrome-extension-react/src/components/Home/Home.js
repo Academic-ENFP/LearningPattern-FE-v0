@@ -3,6 +3,28 @@ import "./Home.css"
 import { render } from "react-dom";
 import { Router, Link, Route, Switch } from "react-router-dom"
 import Signin from "../Signin/Signin";
+import axios from "axios";
+
+// function getSubject() {
+//     const subject = axios({
+//         url: 'http://127.0.0.1:8000/api/subject', // 통신할 웹문서
+//         method: 'get', // 통신할 방식
+//         // data: { // 인자로 보낼 데이터
+//         //     foo: 'diary'
+//         // }
+//     });
+//     return subject
+// }
+
+// const subject = getSubject()
+
+// function getLecname(subject) {
+//     console.log(subject.data)
+//     return subject.data
+// }
+// document.getElementById('lecture2').innerHTML = getLecname(subject)
+
+
 
 function Home() {
     return (
@@ -21,16 +43,19 @@ function Home() {
                         <div id="button">
                             <button id="newMemo" onClick="location.href='memo.html'">새 메모 작성하기</button>
                             <button id="memo1">1. 다항식의 연산</button>
-                            <button id="memo2"></button>
+                            <button id="memo2"> </button>
                         </div>
                     </div>
                 <div className="lecture">
                     <div className="lecture_title">강의</div>
                     <a href="timestamp.html" id="lecture1">고등 예비과정 수학1</a>
+                    <a href="timestamp.html" id="lecture2"></a>
                 </div>
             </div>
         </div>
     );
 };
+
+
 
 export default Home;
