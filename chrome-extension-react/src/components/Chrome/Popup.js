@@ -13,15 +13,15 @@ function opennewTab() {
 function selectVideo() {
 
     //강의 영상 선택 POST
-    fetch("URL", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
-    }).then(res => {
-        return res.json()
-    })
+    // fetch("URL", {
+    //     method: "POST",
+    //     headers: {
+    //       "Content-Type": "application/json",
+    //     },
+    //     body: JSON.stringify(data),
+    // }).then(res => {
+    //     return res.json()
+    // })
 
     videos = document.getElementsByTagName('video')
     if (videos.length() != 0) {
@@ -32,7 +32,7 @@ function selectVideo() {
             var width = element.width;
             var height = element.height;
             var new_div = document.createElement("div");
-            new_div.innerHTML = '<div id="lecture_layer"><img src="" class="lecture_play_img" /></div>';
+            new_div.innerHTML += '<div id="lecture_layer"><img src="" class="lecture_play_img" /></div>';
 
             new_div.style.top = top;
             new_div.style.left = left;
