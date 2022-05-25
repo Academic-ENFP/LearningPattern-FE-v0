@@ -19,7 +19,7 @@ async function Signin() {
         credentials:'include'
     });
     
-    if(res.status == 200){ 
+    if(res.status == 200){  // OK
         this.props.navigation.navigate("Home_Default"); //로그인 성공 시 홈화면 이동
     
     //스토어저장
