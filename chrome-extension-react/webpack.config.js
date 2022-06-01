@@ -11,8 +11,10 @@ module.exports = {
     },
     entry: {
         popup: path.resolve(__dirname, './src/popup.jsx'),
-        options: path.resolve(__dirname, './src/options.jsx'),
-        foreground: path.resolve(__dirname, './src/foreground.jsx'),
+        popupSignedIn: path.resolve(__dirname, './src/popupSignedIn.jsx'),
+        learningpage: path.resolve(__dirname, './src/learningpage.jsx'),
+        background: path.resolve(__dirname, './src/background.js'),
+        injectedScript: path.resolve(__dirname, './src/injectedScript.js')
     },
     output: {
         path: path.resolve(__dirname, 'dist'),
@@ -54,20 +56,18 @@ module.exports = {
             chunks: ['popup']
         }),
         new HtmlWebpackPlugin({ 
-            template: './src/options.html',
-            filename: 'options.html',
-            chunks: ['options']
+            template: './src/popupSignedIn.html',
+            filename: 'popupSignedIn.html',
+            chunks: ['popupSignedIn']
         }),
         new HtmlWebpackPlugin({ 
-            template: './src/foreground.html',
-            filename: 'foreground.html',
-            chunks: ['foreground']
+            template: './src/learningpage.html',
+            filename: 'learningpage.html',
+            chunks: ['learningpage']
         }),
         new CopyPlugin({ // build할 때 경로에 있는 파일을 dist 폴더에 복사하기 위한 plugin
             patterns: [
-              { from: 'public/manifest.json', to: '[name][ext]' },
-              { from: 'src/background.js', to: '[name][ext]' },
-              { from: 'src/inject_script.js', to: '[name][ext]' },
+              { from: './src/manifest.json', to: '[name][ext]' },
             ],
         }),
         new CleanWebpackPlugin()
