@@ -2,15 +2,32 @@ import React from 'react';
 import {render} from 'react-dom';
 import '../popup.css';
 
-
-
 function Popup(){
     return (
         <div class="popup">
             <div class="popup_title">Lecmind</div>
-            <div class="signin">
+            <div class="popup_signin">
                 로그인 후<br />이용하실 수 있습니다. 
-                <button id="signin_btn" onClick={(e)=>{chrome.tabs.create({url: 'http://127.0.0.1:8000/signin'});}}>로그인</button>
+                <form action="" method="POST">
+                    <h1>Sign in</h1>
+                    <div class="social-container">
+                    </div>
+                    
+                    <div class="input-box">
+                        <div id="id_title">id</div>
+                        <input class="signin" type="text" name="id" placeholder="id"></input>
+                    </div>
+
+                    <div class="input-box">
+                        <div id="password_title">password</div>
+                        <input class="signin" type="password" name="password" placeholder="password"></input>
+                    </div>
+                
+                    <input id="submit_signin" type="submit" value="Submit"></input>
+                    <a id="google_sigin" href="{% provider_login_url 'google' %}">
+                        Sign in with Google    
+                    </a>
+                </form>
             </div>
         </div>
     )

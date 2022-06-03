@@ -8,6 +8,7 @@ import '../popupSignedIn.css';
 function PopupSignedIn(){
     chrome.runtime.connect({ name: "popup" });
     
+
     return (
     <div className="popup-signed-in">
         <div class="popup_title">Lecmind</div>

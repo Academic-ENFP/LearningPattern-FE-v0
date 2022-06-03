@@ -1,7 +1,7 @@
 const btnstyle = {
-    opacity: 1,
-    zIndex: 1000,
-    transition: 'all .5s',
+    // opacity: 1,
+    // zIndex: 1000,
+    // transition: 'all .5s',
 }
 
 const bgstyle = {
@@ -11,10 +11,6 @@ const bgstyle = {
     width: '100%',
     height: '100%',
     backgroundColor: 'rgba(0, 0, 0, 0.3)',
-
-    /* 숨기기 */
-    zIndex: -1,
-    opacity: 0,
 }
 
 const winstyle = {
@@ -44,19 +40,48 @@ const popstyle = {
     transform: 'translate(-50%, -40%)'
 }
 
-
+function setLecture(video_id) {
+    fetch(`http://127.0.0.1/api/lecture`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        "video_id": video_id,
+        "name": "temp",
+        "degree": "",
+        "complet_date": "",
+        "lecture_time": "",
+        "learning_time": "",
+        "state": "",
+        "subject": "temp"
+      }),
+    }).then(res => {
+      if(res.ok) {
+        alert("생성이 완료되었습니다.")
+      }
+    })
+    
+}
 
 function open () {
-    document.querySelector(".background").className = "background lecture_select_btn";
+    chrome.tabs.query({ currentWindow: true, active: true }, function(tabs) {
+        id = tabs[0].id
+        chrome.scripting.executeScript({target: { tabId: id }, func: deleteSelectArea})
+    });
 }
 
 function close () {
-    document.querySelector(".background").className = "background";
+    chrome.tabs.query({ currentWindow: true, active: true }, function(tabs) {
+        id = tabs[0].id
+        chrome.scripting.executeScript({target: { tabId: id }, func: deleteSelectArea})
+    });
 }
 
 
 function deleteSelectArea() {
-    target = document.querySelector('#lecture_layer').parentElement
+    target = document.querySelector('#lecmind_appended')
+    console.log(target)
     document.body.removeChild(target)
 }
 
@@ -69,6 +94,7 @@ function selectVideo() {
         var width = element.width;
         var height = element.height;
         var new_div = document.createElement('div'); 
+        new_div.setAttribute('id', 'lecmind_appended')
 
         new_div.style.top = element.top + 'px'; // 인식이 잘 안됨
         new_div.style.left = left + 'px';
@@ -96,21 +122,17 @@ function selectVideo() {
         select_guide.style.borderRadius = "20px"
         select_guide.style.top = -(new_div.offsetTop / 2)+ 'px'
         select_guide.style.boxShadow = "2px 3px 5px 0px";
-        select_guide.innerHTML += '<div id="guide_text"><h2>수강할 영상을 선택해주세요!</h2></div>'
+        select_guide.style.textAlign = "center";
+        select_guide.innerHTML += '<div id="guide_text" style="margin-top: 15px;"><h2>수강할 영상을 선택해주세요!</h2></div>'
         new_div.appendChild(select_guide)
         
         var new_btn = document.createElement('div');
         new_btn.style.position = 'absolute';
         new_btn.style.top = (new_div.offsetHeight / 4) + 'px'
         new_btn.style.left = (new_div.offsetWidth / 3) + 'px'
-        new_btn.innerHTML +=  '<a href="#" id="lecture_select_btn" style={btnstyle}><img src="https://cdn-icons-png.flaticon.com/128/149/149125.png" /></a>';
+        new_btn.innerHTML +=  '<img id="lecture_select_btn" style="cursor: pointer;" src="https://cdn-icons-png.flaticon.com/128/149/149125.png"/>';
         document.querySelector('#lecture_layer').appendChild(new_btn); // new_div 안쪽으로 들어감
-        
-        var inputPop = document.createElement('div');
-        inputPop.innerHTML += '<div class="background" style={bgstyle}><div class="window" style={winstyle}><div class="subject_input_pop style={popstyle}><form id="form" style={formstyle}><h2>과목을 입력해주세요.</h2><input type="text"/><input onclick="self.close();" type="submit" value="확인" /><input onclick="self.close();" type="reset" value="취소" /></form></div></div></div>'
-        new_btn.appendChild(inputPop)
-
-        document.querySelector("#lecture_select_btn").addEventListener('click', open);
+        document.querySelector('#lecture_select_btn').onclick = chrome.runtime.sendMessage("setLecture", response => {console.log("setLecture");})
     } 
 }
 
@@ -119,22 +141,28 @@ function selectVideo() {
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     chrome.tabs.query({ currentWindow: true, active: true }, function(tabs) {
         id = tabs[0].id
-        
+        url = tabs[0].url
+        video_id = url.split('=')[1]
         if (message === 'selectVideo') {
             sendResponse({work: 'welcome!'})
             chrome.scripting.executeScript({target: { tabId: id }, func: selectVideo})
             //chrome.scripting.executeScript({target: { tabId: id}, files: [injectedScript.bundle.js]})
         }
+        else if (message === 'setLecture') {
+            sendResponse({work: 'welcome!'})
+            chrome.scripting.executeScript({target: { tabId: id }, func: setLecture, args: [video_id]})
+        }
     });
+    return true;
 });
 
-chrome.runtime.onConnect.addListener(function(port) {
-    if (port.name === "popup") {
-        port.onDisconnect.addListener(function() {
-            chrome.tabs.query({ currentWindow: true, active: true }, function(tabs) {
-                id = tabs[0].id
-                chrome.scripting.executeScript({target: { tabId: id }, func: deleteSelectArea})
-            });
-        });
-    }
-});
+// chrome.runtime.onConnect.addListener(function(port) {
+//     if (port.name === "popup") {
+//         port.onDisconnect.addListener(function() {
+//             chrome.tabs.query({ currentWindow: true, active: true }, function(tabs) {
+//                 id = tabs[0].id
+//                 chrome.scripting.executeScript({target: { tabId: id }, func: deleteSelectArea})
+//             });
+//         });
+//     }
+// });
