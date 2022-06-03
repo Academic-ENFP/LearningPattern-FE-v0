@@ -1,0 +1,106 @@
+
+.popup {
+    width: 420px;
+    height: 330px;
+    background-color: rgba(234, 234, 234, 0.921);
+}
+
+.popup_title {
+    height: 50px;
+    position: relative;
+    text-align: center;
+    font-size: 30px;
+    color:#fda7b3;
+    font-weight: bold;
+    border-bottom-style: solid;
+    border-bottom-width: 1px;
+    border-bottom-color: #696969;
+}
+
+.signin {
+    text-align: center;
+    font-size: 25px;
+    font-weight:400;
+    color: #696969;
+    position: relative;
+    height: 40px;
+}
+
+label {
+    font-size: 17px;
+}
+
+#email {
+    position: relative;
+    width: 300px;
+    height: 40px;
+    border-radius: 30px;
+    border: 0;
+    box-shadow: 2px 2px 5px 0px #696969;
+}
+
+#email:focus {
+    outline: none;
+    border-color: #fda7b3;
+    box-shadow: 0 0 0 3px #fda7b3;
+}
+
+#email::placeholder {
+    font-size: 15px;
+}
+
+#pass {
+    position: relative;
+    width: 300px;
+    height: 40px;
+    border-radius: 30px;
+    border: 0;
+    box-shadow: 2px 2px 5px 0px #696969;
+}
+
+#pass:focus {
+    outline: none;
+    border-color: #fda7b3;
+    box-shadow: 0 0 0 4px #fda7b3;
+}
+
+#pass::placeholder {
+    font-size: 15px;
+}
+
+#signin_btn {
+    position: relative;
+    top: 20px;
+    width: 200px;
+    height: 50px;
+    font-size: 20px;
+    font-weight: bold;
+    border: 0;
+    border-radius: 30px;
+    box-shadow: 2px 2px 3px #696969;
+    margin-right: -4px;
+    color: white;
+    background-color: #FFC0CB;
+}
+
+#signin_btn:hover {
+    color: #fff;
+    box-shadow:200px 0 0 0 rgba(255, 167, 186, 0.921) inset;
+    cursor: pointer;
+}
+
+.signup {
+    position: relative;
+    top: 40px;
+    font-size: 15px;
+}
+
+#signup_btn {
+    all: unset;
+    color: #fda7b3;
+}
+
+#signup_btn:hover {
+    color: #696969;
+    cursor: pointer;
+}

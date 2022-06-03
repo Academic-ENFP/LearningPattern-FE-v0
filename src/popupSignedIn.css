@@ -1,0 +1,96 @@
+
+.popup-signed-in {
+    width: 420px;
+    height: 220px;
+    background-color: rgba(234, 234, 234, 0.921);
+}
+
+.popup_title {
+    height: 50px;
+    position: relative;
+    text-align: center;
+    font-size: 30px;
+    color:#fda7b3;
+    font-weight: bold;
+    border-bottom-style: solid;
+    border-bottom-width: 1px;
+    border-bottom-color: #696969;
+}
+
+.mypage {
+    position: relative;
+    color: #696969;
+    font-size: 17px;
+    border-bottom-style: solid;
+    border-bottom-width: 1px;
+    border-bottom-color: #696969;
+}
+
+
+#newTab {
+    position: relative;
+    top: -5px;
+    left: 150px;
+    width: 100px;
+    height: 30px;
+    border: 0;
+    border-radius: 30px;
+    box-shadow: 2px 2px 3px #696969;
+    margin-right: -4px;
+    color: white;
+    background-color: #FFC0CB;
+}
+
+#newTab:hover {
+    color: #fff;
+    box-shadow:200px 0 0 0 rgba(255, 167, 186, 0.921) inset;
+    cursor: pointer;
+}
+
+.videoselect {
+    position: relative;
+    color: #696969;
+    font-size: 17px;
+    border-bottom-style: solid;
+    border-bottom-width: 1px;
+    border-bottom-color: #696969;
+}
+
+
+#select {
+    position: relative;
+    top: -5px;
+    left: 99px;
+    width: 100px;
+    height: 30px;
+    border: 0;
+    border-radius: 30px;
+    box-shadow: 2px 2px 3px #696969;
+    margin-right: -4px;
+    color: white;
+    background-color: #FFC0CB;
+}
+
+#select:hover {
+    color: #fff;
+    box-shadow:200px 0 0 0 rgba(255, 167, 186, 0.921) inset;
+    cursor: pointer;
+}
+
+.signout {
+    position: relative;
+    font-size: 17px;
+    color: #696969;
+    height: 40px;
+}
+
+#signout_btn {
+    position: relative;
+    top: -5px;
+    all: unset;
+}
+
+#signout_btn:hover {
+    cursor: pointer;
+    color: #fda7b3;
+}
