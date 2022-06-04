@@ -5,6 +5,7 @@ import PopupSignedIn from "./components/PopupSignedIn";
 import Cookies from "js-cookie";
 import axios from "axios";
 
+const JWT_EXPIRY_TIME = 24 * 3600 * 1000; // 만료 시간 (24시간 밀리 초로 표현)
 var signed = false;
 const csrftoken = Cookies.get("csrftoken");
 const refreshtoken = Cookies.get("refreshToken");

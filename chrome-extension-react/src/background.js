@@ -1,9 +1,23 @@
-var accessToken = ''
+function getCookie(name) {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        const cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i].trim();
+            // Does this cookie string begin with the name we want?
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
 
 const btnstyle = {
-    // opacity: 1,
-    // zIndex: 1000,
-    // transition: 'all .5s',
+    opacity: 1,
+    zIndex: 1000,
+    transition: 'all .5s',
 }
 
 const bgstyle = {
@@ -42,28 +56,43 @@ const popstyle = {
     transform: 'translate(-50%, -40%)'
 }
 
-function setLecture(video_id) {
+function setLecture(token, video_id) {
+    const csrftoken = getCookie('csrftoken')
     fetch(`http://127.0.0.1:8000/api/lecture/`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        "video_id": video_id,
-        "name": "temp",
-        "degree": "",
-        "complet_date": "",
-        "lecture_time": "",
-        "learning_time": "",
-        "state": "",
-        "subject": "temp"
-      }),
+        method: 'POST',
+        body: JSON.stringify({
+            video_id: video_id,
+            name: "temp",
+            degree: null,
+            complet_date: null,
+            lecture_time: null,
+            learning_time: null,
+            state: "",
+            subject: "temp"
+        }),
+        headers: {
+            "Content-Type": "application/json",
+            'X-CSRFToken': csrftoken,
+            'Authorization': `Bearer ${token}`
+        }
     }).then(res => {
-      if(res.ok) {
-        alert("생성이 완료되었습니다.")
-      }
+        if(res.ok) {
+          alert("생성이 완료되었습니다.")
+        }
     })
-    
+}
+
+function learning (){
+    <div className="learningpage">
+        <button id="learning_popup_open">팝업열기</button>
+        <div class="background">
+            <div class="window">
+                <div class="learning_popup">
+                    <button id="learning_popup_close">팝업닫기</button>
+                </div>
+            </div>
+        </div>
+    </div>
 }
 
 function open () {
@@ -87,7 +116,7 @@ function deleteSelectArea() {
     document.body.removeChild(target)
 }
 
-function selectVideo() {
+function selectVideo(token) {
     videos = document.getElementsByTagName('video')
     if (videos.length != 0) {
         var element = videos[0].getBoundingClientRect();
@@ -134,7 +163,7 @@ function selectVideo() {
         new_btn.style.left = (new_div.offsetWidth / 3) + 'px'
         new_btn.innerHTML +=  '<img id="lecture_select_btn" style="cursor: pointer;" src="https://cdn-icons-png.flaticon.com/128/149/149125.png"/>';
         document.querySelector('#lecture_layer').appendChild(new_btn); // new_div 안쪽으로 들어감
-        document.querySelector('#lecture_select_btn').onclick = chrome.runtime.sendMessage("setLecture", response => {console.log("setLecture");})
+        document.querySelector('#lecture_select_btn').onclick = (e) => chrome.runtime.sendMessage({type: "setLecture", token : token}, response => {console.log("setLecture");})
     } 
 }
 
@@ -142,27 +171,28 @@ function selectVideo() {
 
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     chrome.tabs.query({ currentWindow: true, active: true }, function(tabs) {
-        if (message === 'selectVideo') {
+        const id = tabs[0].id
+        if (message.type === 'selectVideo') {
             sendResponse({work: 'welcome!'})
-            id = tabs[0].id
-            chrome.scripting.executeScript({target: { tabId: id }, func: selectVideo})
+            var token = message.token
+            chrome.scripting.executeScript({target: { tabId: id }, func: selectVideo, args: [token]})
             //chrome.scripting.executeScript({target: { tabId: id}, files: [injectedScript.bundle.js]})
         }
-        else if (message === 'setLecture') {
+        else if (message.type === 'setLecture') {
             sendResponse({work: 'welcome!'})
-            id = tabs[0].id
-            url = tabs[0].url
-            video_id = url.split('=')[1]
-            chrome.scripting.executeScript({target: { tabId: id }, func: setLecture, args: [video_id]})
+            var token = message.token
+            var url = tabs[0].url
+            var video_id = url.split('=')[1]
+            chrome.scripting.executeScript({target: { tabId: id }, func: setLecture, args: [token, video_id]})
         }
-        else if (message.type === 'token') {
-            sendResponse({work: 'welcome!'})
-            accessToken = message.value
-            console.log(accessToken)
-        }
-        else if (message === 'getToken') {
-            sendResponse(accessToken)
-        }
+        // else if (message.type === 'token') {
+        //     sendResponse({work: 'welcome!'})
+        //     accessToken = message.value
+        //     console.log(accessToken)
+        // }
+        // else if (message === 'getToken') {
+        //     sendResponse(accessToken)
+        // }
     });
     return true;
 });

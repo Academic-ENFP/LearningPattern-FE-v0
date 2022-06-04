@@ -1,10 +1,10 @@
 import React from 'react';
 import {render} from 'react-dom';
 import '../popup.css';
-import Cookies from 'js-cookie'
-import axios from "axios"
+import Cookies from 'js-cookie';
+import axios from "axios";
 
-Cookies.set('csrftoken')
+console.log(Cookies.get('csrftoken'))
 const JWT_EXPIRY_TIME = 24 * 3600 * 1000; // 만료 시간 (24시간 밀리 초로 표현)
 
 const login = () => {
@@ -17,7 +17,7 @@ const login = () => {
         },
         {
             "Content-Type": "application/json",
-            'X-CSRFToken': Cookies.set('csrftoken'),
+            'X-CSRFToken': Cookies.get('csrftoken'),
         }).then(onLoginSuccess)
 }
 
