@@ -9,7 +9,7 @@ const JWT_EXPIRY_TIME = 24 * 3600 * 1000; // 만료 시간 (24시간 밀리 초�
 
 const login = () => {
     var id = document.querySelector('#id').value
-    var pw = document.querySelector('#password').value
+    var pw = document.querySelector('#pass').value
     axios.post(`http://127.0.0.1:8000/api-token-auth/`,
         {
             password: pw,
@@ -44,22 +44,18 @@ function Popup(){
     return (
         <div class="popup">
             <div class="popup_title">Lecmind</div>
-            <div class="popup_signin">
-                로그인 후<br />이용하실 수 있습니다. 
+            <div class="signin">
                 <div class="input-box">
-                    <div id="id_title">id</div>
-                    <input id="id" class="signin" type="text" name="id" placeholder="id"></input>
+                    <label>Enter id</label><br />
+                    <input type="text" id="id" name="id" placeholder="id"></input><br />
+                    <label>Enter password</label><br />
+                    <input type="password" id="pass" name="password" placeholder="password"></input><br />
+                    <button id="signin_btn" value="Login" onClick={login}>Sign In</button>
                 </div>
-
-                <div class="input-box">
-                    <div id="password_title">password</div>
-                    <input id="password"class="signin" type="password" name="password" placeholder="password"></input>
+                <div class="signup">
+                    아직 Lecmind 회원이 아니신가요? 
+                    <button id="signup_btn" onClick={(e)=>{chrome.tabs.create({url: 'http://127.0.0.1:8000/signin'});}}>회원가입</button>
                 </div>
-            
-                <button id="submit_signin" value="Login" onClick={login}>Login</button>
-                <a id="google_sigin" href="{% provider_login_url 'google' %}">
-                    Sign in with Google    
-                </a>
             </div>
         </div>
     )

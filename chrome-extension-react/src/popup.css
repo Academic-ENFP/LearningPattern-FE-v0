@@ -1,7 +1,7 @@
-
 .popup {
     width: 420px;
-    height: 220px;
+    height: 330px;
+    background-color: rgba(234, 234, 234, 0.921);
 }
 
 .popup_title {
@@ -16,30 +16,67 @@
     border-bottom-color: #696969;
 }
 
-.popup_signin {
-	background-color: #FFFFFF;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	flex-direction: column;
-	padding: 10px 50px;
-	height: 500px;
+.signin {
     text-align: center;
     font-size: 25px;
     font-weight:400;
     color: #696969;
     position: relative;
+    height: 40px;
 }
 
-/* #signin_btn {
+label {
+    font-size: 17px;
+}
+
+#id {
     position: relative;
-    top: 10px;
+    width: 300px;
+    height: 40px;
+    border-radius: 30px;
+    border: 0;
+    box-shadow: 2px 2px 5px 0px #696969;
+}
+
+#id:focus {
+    outline: none;
+    border-color: #fda7b3;
+    box-shadow: 0 0 0 3px #fda7b3;
+}
+
+#id::placeholder {
+    font-size: 15px;
+}
+
+#pass {
+    position: relative;
+    width: 300px;
+    height: 40px;
+    border-radius: 30px;
+    border: 0;
+    box-shadow: 2px 2px 5px 0px #696969;
+}
+
+#pass:focus {
+    outline: none;
+    border-color: #fda7b3;
+    box-shadow: 0 0 0 4px #fda7b3;
+}
+
+#pass::placeholder {
+    font-size: 15px;
+}
+
+#signin_btn {
+    position: relative;
+    top: 20px;
     width: 200px;
     height: 50px;
     font-size: 20px;
-    border-top-left-radius: 5px;
-    border-bottom-left-radius: 5px;
-    border-bottom-right-radius: 5px;
+    font-weight: bold;
+    border: 0;
+    border-radius: 30px;
+    box-shadow: 2px 2px 3px #696969;
     margin-right: -4px;
     color: white;
     background-color: #FFC0CB;
@@ -47,215 +84,22 @@
 
 #signin_btn:hover {
     color: #fff;
-    box-shadow:200px 0 0 0 rgba(254, 142, 206, 0.921) inset;
+    box-shadow:200px 0 0 0 rgba(255, 167, 186, 0.921) inset;
     cursor: pointer;
-} */
-
-
-@import url('https://fonts.googleapis.com/css2?family=Ubuntu&display=swap');
-
-
-.submit {
-    position: absolute;
-    width: 453px;
-    height: 80px;
-    left: 508px;
-    top: 590px;
-
-    background: #FFEFEF;
-    border-radius: 20px;
-
-    font-family: 'Ubuntu', sans-serif;
-    font-style: normal;
-    font-weight: 600;
-    font-size: 30px;
-    line-height: 35px;
-    text-align: center;
-    letter-spacing: -0.02em;
-
-    color: #424777;
 }
 
-.submit_btn {
-	background-color: #eee;
-	border: none;
-	padding: 12px 15px;
-	margin: 8px 0;
-	width: 100%;
+.signup {
+    position: relative;
+    top: 40px;
+    font-size: 15px;
 }
 
-
-.signin-with-google {
-    position: absolute;
-    width: 453px;
-    height: 79px;
-    left: 508px;
-    top: 704px;
-
-    background: #FFFFFF;
-    border: 1px solid #000000;
-    box-sizing: border-box;
-    border-radius: 20px;
-
-    font-family: 'Ubuntu', sans-serif;
-    font-style: normal;
-    font-weight: 600;
-    font-size: 30px;
-    line-height: 35px;
-    text-align: center;
-    letter-spacing: -0.02em;
-
-    color: #424777;
-
+#signup_btn {
+    all: unset;
+    color: #fda7b3;
 }
 
-* {
-	box-sizing: border-box;
-}
-
-
-
-h1 {
-	font-weight: bold;
-	margin: 0;
-	color: rgb(247, 136, 136);
-}
-
-h2 {
-	text-align: center;
-}
-
-p {
-	font-size: 14px;
-	font-weight: 100;
-	line-height: 20px;
-	letter-spacing: 0.5px;
-	margin: 20px 0 30px;
-}
-
-span {
-	font-size: 12px;
-}
-
-a {
-	color: #333;
-	font-size: 14px;
-	text-decoration: none;
-	margin: 15px 0;
-}
-
-.input-box{
-	padding: 5px;
-}
-
-#id_title{
-	text-align: left;
-}
-
-#password_title{
-	text-align: left;
-}
-
-.signin{
-	border-radius: 10px;
-	border: 2px solid #fce4e4;
-	background-color: #ffffff;
-	color: #333232;
-	width: 200px;
-	font-family: 'Ubuntu', sans-serif;
-	font-size: 12px;
-	font-weight: bold;
-	padding: 12px 10px;
-	letter-spacing: 1px;
-	transition: transform 80ms ease-in;
-}
-
-#google_sigin{
-	border-radius: 10px;
-	border: 2px solid #fce4e4;
-	background-color: #ffffff;
-	color: #333232;
-	width: 200px;
-	font-family: 'Ubuntu', sans-serif;
-	font-size: 12px;
-	font-weight: bold;
-	padding: 12px 10px;
-	letter-spacing: 1px;
-	transition: transform 80ms ease-in;
-}
-
-#submit_signin {
-	border-radius: 10px;
-	border: 1px solid #fce4e4;
-	background-color: #fce4e4;
-	color: #333232;
-	width: 200px;
-	font-family: 'Ubuntu', sans-serif;
-	font-size: 12px;
-	font-weight: bold;
-	padding: 12px 45px;
-	letter-spacing: 1px;
-	text-transform: uppercase;
-	transition: transform 80ms ease-in;
-}
-
-#submit_signin:active {
-	transform: scale(0.95);
-}
-
-#submit_signin:focus {
-	outline: none;
-}
-
-#submit_signin.ghost {
-	background-color: transparent;
-	border-color: #FFFFFF;
-}
-
-form {
-	background-color: #FFFFFF;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	flex-direction: column;
-	padding: 10px 50px;
-	height: 500px;
-	text-align: center;
-}
-
-input {
-	background-color: #eee;
-	border: none;
-	padding: 12px 15px;
-	margin: 8px 0;
-	width: 100%;
-}
-
-
-@keyframes show {
-	0%, 49.99% {
-		opacity: 0;
-		z-index: 1;
-	}
-	
-	50%, 100% {
-		opacity: 1;
-		z-index: 5;
-	}
-}
-
-
-.social-container {
-	margin: 20px 0;
-}
-
-.social-container a {
-	border: 1px solid #DDDDDD;
-	border-radius: 50%;
-	display: inline-flex;
-	justify-content: center;
-	align-items: center;
-	margin: 0 5px;
-	height: 40px;
-	width: 40px;
-}
+#signup_btn:hover {
+    color: #696969;
+    cursor: pointer;
+} 

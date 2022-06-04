@@ -1,7 +1,7 @@
-
 .popup-signed-in {
     width: 420px;
-    height: 250px;
+    height: 220px;
+    background-color: rgba(234, 234, 234, 0.921);
 }
 
 .popup_title {
@@ -17,7 +17,9 @@
 }
 
 .mypage {
+    position: relative;
     color: #696969;
+    font-size: 17px;
     border-bottom-style: solid;
     border-bottom-width: 1px;
     border-bottom-color: #696969;
@@ -30,9 +32,9 @@
     left: 150px;
     width: 100px;
     height: 30px;
-    border-top-left-radius: 5px;
-    border-bottom-left-radius: 5px;
-    border-bottom-right-radius: 5px;
+    border: 0;
+    border-radius: 30px;
+    box-shadow: 2px 2px 3px #696969;
     margin-right: -4px;
     color: white;
     background-color: #FFC0CB;
@@ -40,13 +42,14 @@
 
 #newTab:hover {
     color: #fff;
-    box-shadow:200px 0 0 0 rgba(254, 142, 206, 0.921) inset;
+    box-shadow:200px 0 0 0 rgba(255, 167, 186, 0.921) inset;
     cursor: pointer;
 }
 
 .videoselect {
     position: relative;
     color: #696969;
+    font-size: 17px;
     border-bottom-style: solid;
     border-bottom-width: 1px;
     border-bottom-color: #696969;
@@ -56,12 +59,12 @@
 #select {
     position: relative;
     top: -5px;
-    left: 102px;
+    left: 99px;
     width: 100px;
     height: 30px;
-    border-top-left-radius: 5px;
-    border-bottom-left-radius: 5px;
-    border-bottom-right-radius: 5px;
+    border: 0;
+    border-radius: 30px;
+    box-shadow: 2px 2px 3px #696969;
     margin-right: -4px;
     color: white;
     background-color: #FFC0CB;
@@ -69,13 +72,14 @@
 
 #select:hover {
     color: #fff;
-    box-shadow:200px 0 0 0 rgba(254, 142, 206, 0.921) inset;
+    box-shadow:200px 0 0 0 rgba(255, 167, 186, 0.921) inset;
     cursor: pointer;
 }
 
 .signout {
-    color: #696969;
     position: relative;
+    font-size: 17px;
+    color: #696969;
     height: 40px;
 }
 
