@@ -1,3 +1,5 @@
+var accessToken = ''
+
 const btnstyle = {
     // opacity: 1,
     // zIndex: 1000,
@@ -41,7 +43,7 @@ const popstyle = {
 }
 
 function setLecture(video_id) {
-    fetch(`http://127.0.0.1/api/lecture`, {
+    fetch(`http://127.0.0.1:8000/api/lecture/`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -140,17 +142,26 @@ function selectVideo() {
 
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     chrome.tabs.query({ currentWindow: true, active: true }, function(tabs) {
-        id = tabs[0].id
-        url = tabs[0].url
-        video_id = url.split('=')[1]
         if (message === 'selectVideo') {
             sendResponse({work: 'welcome!'})
+            id = tabs[0].id
             chrome.scripting.executeScript({target: { tabId: id }, func: selectVideo})
             //chrome.scripting.executeScript({target: { tabId: id}, files: [injectedScript.bundle.js]})
         }
         else if (message === 'setLecture') {
             sendResponse({work: 'welcome!'})
+            id = tabs[0].id
+            url = tabs[0].url
+            video_id = url.split('=')[1]
             chrome.scripting.executeScript({target: { tabId: id }, func: setLecture, args: [video_id]})
+        }
+        else if (message.type === 'token') {
+            sendResponse({work: 'welcome!'})
+            accessToken = message.value
+            console.log(accessToken)
+        }
+        else if (message === 'getToken') {
+            sendResponse(accessToken)
         }
     });
     return true;

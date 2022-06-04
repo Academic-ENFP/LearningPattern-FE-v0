@@ -17,12 +17,18 @@
 }
 
 .popup_signin {
+	background-color: #FFFFFF;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-direction: column;
+	padding: 10px 50px;
+	height: 500px;
     text-align: center;
     font-size: 25px;
     font-weight:400;
     color: #696969;
     position: relative;
-    height: 40px;
 }
 
 /* #signin_btn {
@@ -68,6 +74,14 @@
     letter-spacing: -0.02em;
 
     color: #424777;
+}
+
+.submit_btn {
+	background-color: #eee;
+	border: none;
+	padding: 12px 15px;
+	margin: 8px 0;
+	width: 100%;
 }
 
 

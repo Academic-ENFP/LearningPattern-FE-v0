@@ -1,0 +1,17 @@
+{
+    "name": "chrome-extension",
+    "description": "Build an Extension!",
+    "version": "1.0",
+    "manifest_version": 3,
+    "background": { "service_worker": "background.bundle.js" },
+    "permissions": [
+        "scripting",
+        "activeTab",
+        "storage",
+        "identity",
+        "http://127.0.0.1:8000/*/"
+    ],
+    "action": {
+        "default_popup": "popup.html"
+    }
+}

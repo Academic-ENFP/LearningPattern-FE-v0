@@ -10,8 +10,10 @@ module.exports = {
         historyApiFallback: true
     },
     entry: {
-        popup: path.resolve(__dirname, './src/popup.jsx'),
-        popupSignedIn: path.resolve(__dirname, './src/popupSignedIn.jsx'),
+        // index: path.resolve(__dirname, './src/Index.js'),
+        // app: path.resolve(__dirname, './src/App.js'),
+        popup: path.resolve(__dirname, './src/Popup.jsx'),
+        popupSignedIn: path.resolve(__dirname, './src/PopupSignedIn.jsx'),
         learningpage: path.resolve(__dirname, './src/learningpage.jsx'),
         background: path.resolve(__dirname, './src/background.js'),
         injectedScript: path.resolve(__dirname, './src/injectedScript.js')
@@ -50,6 +52,11 @@ module.exports = {
     },
 
     plugins: [
+        // new HtmlWebpackPlugin({ 
+        //     template: './src/index.html',
+        //     filename: 'index.html',
+        //     chunks: ['index']
+        // }),
         new HtmlWebpackPlugin({ 
             template: './src/popup.html',
             filename: 'popup.html',
