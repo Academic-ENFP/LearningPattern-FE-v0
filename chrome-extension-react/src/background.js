@@ -67,7 +67,7 @@ function setLecture(token, video_id) {
             complet_date: null,
             lecture_time: null,
             learning_time: null,
-            state: "",
+            state: "ongoing",
             subject: "temp"
         }),
         headers: {
@@ -79,20 +79,43 @@ function setLecture(token, video_id) {
         if(res.ok) {
           alert("생성이 완료되었습니다.")
         }
+    }).catch({
+
     })
+    learning(video_id)
 }
 
-function learning (){
-    <div className="learningpage">
-        <button id="learning_popup_open">팝업열기</button>
-        <div class="background">
-            <div class="window">
-                <div class="learning_popup">
-                    <button id="learning_popup_close">팝업닫기</button>
-                </div>
-            </div>
-        </div>
-    </div>
+function learning(video_id){
+    var iframe = document.createElement('iframe')
+    iframe.setAttribute('src', `http://127.0.0.1:8000/learning/${video_id}`);
+    iframe.style.setProperty("position", "absolute", "important");
+    iframe.style.setProperty("top", "50%", "important");
+    iframe.style.setProperty("left", "50%", "important");
+    iframe.style.setProperty("transform", "translate(-50%, -50%)", "important");
+    iframe.style.setProperty("width", "100%", "important");
+    iframe.style.setProperty("height", "100%", "important");
+    iframe.style.setProperty("backgroundColor", "rgb(0, 0, 0)", "important");
+    iframe.style.setProperty("boxShadow", "rgba(0, 0, 0, 0.176) 0px 1rem 3rem", "important");
+    iframe.style.setProperty("display", "flex", "important");
+    iframe.style.setProperty("borderWidth", "0px", "important");
+    iframe.style.setProperty("overflow", "hidden", "important");
+
+    var open_btn = document.createElement('button');
+    open_btn.setAttribute('id', 'learning_popup_open');
+    open_btn.innerHTML = "팝업열기";
+
+    var close_btn = document.createElement('button')
+    close_btn.setAttribute('id', 'learning_popup_open');
+    close_btn.innerHTML = "팝업닫기"
+    
+    var lecmind_container = document.querySelector('#lecmind_container')
+    while (lecmind_container.hasChildNodes()) {
+        lecmind_container.removeChild(lecmind_container.firstChild);
+    }
+    lecmind_container.appendChild(iframe)
+    lecmind_container.appendChild(open_btn)
+    lecmind_container.appendChild(close_btn)
+    
 }
 
 function open () {
@@ -124,46 +147,70 @@ function selectVideo(token) {
         var left = element.left;
         var width = element.width;
         var height = element.height;
-        var new_div = document.createElement('div'); 
-        new_div.setAttribute('id', 'lecmind_appended')
 
-        new_div.style.top = element.top + 'px'; // 인식이 잘 안됨
-        new_div.style.left = left + 'px';
-        new_div.style.width = width + 'px';
-        new_div.style.height = height + 'px';
-        new_div.style.zIndex = 2147483646;
-        new_div.style.position = 'absolute';
-        new_div.style.display = 'flex';
-        new_div.style.justifyContent = 'center';
-        new_div.style.alignItems = 'center';
-        new_div.innerHTML += '<div id="lecture_layer"><img id="lecmind_layout" src="https://png.pngtree.com/background/20210714/original/pngtree-dark-blue-solid-color-background-wallpaper-picture-image_1219002.jpg" class="lecture_play_img" /></div>';
-        document.body.appendChild(new_div)
-        
-        var img = document.querySelector('#lecmind_layout')
-        img.style.width = element.width + 'px';
-        img.style.height = element.height + 'px';
-        img.style.opacity = '0.4'
+        // var lecture_layer = document.createElement('div');
+        // lecture_layer.setAttribute(id, 'lecture_layer')
+        // lecture_layer.appendChild(lecmind_layout)
 
-        var select_guide = document.createElement('div')
-        select_guide.setAttribute('id', 'guide_textbox')
-        select_guide.style.position = 'absolute';
-        select_guide.style.backgroundColor = "white"
-        select_guide.style.width = "300px"
-        select_guide.style.height = "50px"
-        select_guide.style.borderRadius = "20px"
-        select_guide.style.top = -(new_div.offsetTop / 2)+ 'px'
-        select_guide.style.boxShadow = "2px 3px 5px 0px";
-        select_guide.style.textAlign = "center";
-        select_guide.innerHTML += '<div id="guide_text" style="margin-top: 15px;"><h2>수강할 영상을 선택해주세요!</h2></div>'
-        new_div.appendChild(select_guide)
+        var lecmind_video_layer = document.createElement('img');
+        lecmind_video_layer.setAttribute('id', 'lecmind_video_layer')
+        lecmind_video_layer.setAttribute('src', "https://png.pngtree.com/background/20210714/original/pngtree-dark-blue-solid-color-background-wallpaper-picture-image_1219002.jpg")
+        // lecmind_video_layer.setAttribute(classname, "lecture_play_img")
+        lecmind_video_layer.style.width = element.width + 'px';
+        lecmind_video_layer.style.height = element.height + 'px';
+        lecmind_video_layer.style.opacity = '0.4'
+
+        var lecmind_video_btn = document.createElement('img');
+        lecmind_video_btn.style.position = 'absolute';
+        lecmind_video_btn.style.top = (element.height / 2 - 64) + 'px'
+        lecmind_video_btn.style.left = (element.width / 2 - 64) + 'px'
+        lecmind_video_btn.style.cursor = 'pointer';
+        lecmind_video_btn.setAttribute('id', "lecmind_video_btn")
+        lecmind_video_btn.setAttribute('src', "https://cdn-icons-png.flaticon.com/128/149/149125.png")
+        lecmind_video_btn.onclick = (e) => chrome.runtime.sendMessage({type: "setLecture", token : token}, response => {console.log("setLecture");})
+
+        var lecmind_guide_panel = document.createElement('div')
+        lecmind_guide_panel.setAttribute('id', 'lecmind_guide_panel')
+        lecmind_guide_panel.style.position = 'absolute';
+        lecmind_guide_panel.style.backgroundColor = "white"
+        lecmind_guide_panel.style.width = "300px"
+        lecmind_guide_panel.style.height = "50px"
+        lecmind_guide_panel.style.borderRadius = "20px"
+        lecmind_guide_panel.style.top = '400px'
+        lecmind_guide_panel.style.left = (document.body.clientWidth / 2 - 150)+ 'px'
+        lecmind_guide_panel.style.boxShadow = "2px 3px 5px 0px";
+        lecmind_guide_panel.style.textAlign = "center";
+        lecmind_guide_panel.innerHTML += '<div id="guide_text" style="margin-top: 15px;"><h2>수강할 영상을 선택해주세요!</h2></div>'
+
+        var lecmind_guide_container = document.createElement('div'); 
+        lecmind_guide_container.setAttribute('id', 'lecmind_guide_container')
+        lecmind_guide_container.style.top = element.top + 'px'; // 인식이 잘 안됨
+        lecmind_guide_container.style.left = left + 'px';
+        lecmind_guide_container.style.width = width + 'px';
+        lecmind_guide_container.style.height = height + 'px';
+        lecmind_guide_container.style.position = 'absolute';
+        lecmind_guide_container.style.display = 'flex';
+        lecmind_guide_container.style.justifyContent = 'center';
+        lecmind_guide_container.style.alignItems = 'center';
+
+        var lecmind_container = document.createElement('div'); 
+        lecmind_container.setAttribute('id', 'lecmind_container');
+        lecmind_container.style.zIndex= 2147483644;
+        lecmind_container.style.position= 'fixed';
+        lecmind_container.style.top= '0px';
+        lecmind_container.style.left= '0px';
+        lecmind_container.style.width= '100vw';
+        lecmind_container.style.height= '100vh';
+        lecmind_container.style.backgroundColor= 'rgba(206, 212, 218, 0.5)';
+        lecmind_container.style.cursor= 'not-allowed';
+
         
-        var new_btn = document.createElement('div');
-        new_btn.style.position = 'absolute';
-        new_btn.style.top = (new_div.offsetHeight / 4) + 'px'
-        new_btn.style.left = (new_div.offsetWidth / 3) + 'px'
-        new_btn.innerHTML +=  '<img id="lecture_select_btn" style="cursor: pointer;" src="https://cdn-icons-png.flaticon.com/128/149/149125.png"/>';
-        document.querySelector('#lecture_layer').appendChild(new_btn); // new_div 안쪽으로 들어감
-        document.querySelector('#lecture_select_btn').onclick = (e) => chrome.runtime.sendMessage({type: "setLecture", token : token}, response => {console.log("setLecture");})
+
+        lecmind_guide_container.appendChild(lecmind_video_layer)
+        lecmind_guide_container.appendChild(lecmind_video_btn)
+        lecmind_guide_container.appendChild(lecmind_guide_panel)
+        lecmind_container.appendChild(lecmind_guide_container)
+        document.body.appendChild(lecmind_container)
     } 
 }
 
@@ -185,14 +232,6 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
             var video_id = url.split('=')[1]
             chrome.scripting.executeScript({target: { tabId: id }, func: setLecture, args: [token, video_id]})
         }
-        // else if (message.type === 'token') {
-        //     sendResponse({work: 'welcome!'})
-        //     accessToken = message.value
-        //     console.log(accessToken)
-        // }
-        // else if (message === 'getToken') {
-        //     sendResponse(accessToken)
-        // }
     });
     return true;
 });

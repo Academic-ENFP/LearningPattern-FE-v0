@@ -11,25 +11,25 @@ const login = () => {
     var id = document.querySelector('#id').value
     var pw = document.querySelector('#pass').value
     axios.post(`http://127.0.0.1:8000/api-token-auth/`,
-        {
-            password: pw,
-            id: id
-        },
-        {
-            "Content-Type": "application/json",
-            'X-CSRFToken': Cookies.get('csrftoken'),
-        }).then(onLoginSuccess)
+    {
+        password: pw,
+        id: id
+    },
+    {
+        "Content-Type": "application/json",
+        'X-CSRFToken': Cookies.get('csrftoken'),
+    }).then(onLoginSuccess)
 }
 
 const onSilentRefresh = () => {
     axios.post(`http://127.0.0.1:8000/api-token-refresh/`, 
-        {
-            token: Cookies.get('refreshToken')
-        },
-        {
-            "Content-Type": "application/json",
-            'X-CSRFToken': Cookies.set('csrftoken'),
-        }).then(onLoginSuccess)
+    {
+        token: Cookies.get('refreshToken')
+    },
+    {
+        "Content-Type": "application/json",
+        'X-CSRFToken': Cookies.set('csrftoken'),
+    }).then(onLoginSuccess)
 }
 
 const onLoginSuccess = response => {
@@ -37,6 +37,7 @@ const onLoginSuccess = response => {
     Cookies.set('refreshToken', accessToken)
     axios.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`;
     setTimeout(onSilentRefresh, JWT_EXPIRY_TIME - 60000);
+
     location.reload();
 }
 
