@@ -1,3 +1,5 @@
+// 이미지 전역변수
+
 function getCookie(name) {
     let cookieValue = null;
     if (document.cookie && document.cookie !== '') {
@@ -14,47 +16,40 @@ function getCookie(name) {
     return cookieValue;
 }
 
-const btnstyle = {
-    opacity: 1,
-    zIndex: 1000,
-    transition: 'all .5s',
+function viewer_close () {
+    document.body.querySelector('#lecmind_container').remove()
 }
 
-const bgstyle = {
-    position: 'fixed',
-    top: 0,
-    left: 0,
-    width: '100%',
-    height: '100%',
-    backgroundColor: 'rgba(0, 0, 0, 0.3)',
+function viewer_setScreenMode () {
+    const expand_btn_url = 'https://drive.google.com/uc?export=download&id=1qPnjOOudToH6TsMVqPGxk53Mg0A7f-tm';
+    const shrink_btn_url = 'https://drive.google.com/uc?export=download&id=1gQPdfX2cmuaTdCNS-yP1-WUUr0_DRTMG';
+    // 전체화면 검사
+    if (!window.screenTop && !window.screenY) {
+        document.querySelector('#lecmind_viewer_screen_btn').setAttribute('src', expand_btn_url)
+        document.exitFullscreen()
+    }
+    else {
+        document.querySelector('#lecmind_viewer_screen_btn').setAttribute('src', shrink_btn_url)
+        document.documentElement.requestFullscreen()
+    }
+    
 }
 
-const winstyle = {
-    position: 'relative',
-    width: '100%',
-    height: '100%',
+function viewer_setShowMode () {
+    const hide_btn_url = 'https://drive.google.com/uc?export=download&id=1iRUkQwKOva6Pe11gBNAw_gfdkA0NhIVb';
+    const show_btn_url = 'https://drive.google.com/uc?export=download&id=16EedLOxEhzJi_KDW8UpN1ZynwG0sF4mF';
+    if (document.body.querySelector('#lecmind_layer').style.display == '') {
+        document.querySelector('#lecmind_viewer_show_btn').setAttribute('src', hide_btn_url)
+        document.body.querySelector('#lecmind_layer').style.display = 'none'
+    }
+    else{
+        document.querySelector('#lecmind_viewer_show_btn').setAttribute('src', show_btn_url)
+        document.body.querySelector('#lecmind_layer').style.display = ''
+    }
+    
 }
 
-const formstyle = {
-    backgroundColor: 'white',
-    opacity: 1,
-    zIndex: 1000,
-}
 
-const popstyle = {
-    position: 'absolute',
-    top: '50px',
-    left: '50px',
-    backgroundColor: 'white',
-    boxShadow: '0 2px 7px rgba(0, 0, 0, 0.3)',
-
-    /* 임시 지정 */
-    width: '100px',
-    height: '100px',
-
-    /* 초기에 약간 아래에 배치 */
-    transform: 'translate(-50%, -40%)'
-}
 
 function setLecture(token, video_id) {
     const csrftoken = getCookie('csrftoken')
@@ -75,62 +70,112 @@ function setLecture(token, video_id) {
             'X-CSRFToken': csrftoken,
             'Authorization': `Bearer ${token}`
         }
-    }).then(res => {
-        if(res.ok) {
-          alert("생성이 완료되었습니다.")
-        }
-    }).catch({
-
     })
     learning(video_id)
 }
 
 function learning(video_id){
-    var iframe = document.createElement('iframe')
-    iframe.setAttribute('src', `http://127.0.0.1:8000/learning/${video_id}`);
-    iframe.style.setProperty("position", "absolute", "important");
-    iframe.style.setProperty("top", "50%", "important");
-    iframe.style.setProperty("left", "50%", "important");
-    iframe.style.setProperty("transform", "translate(-50%, -50%)", "important");
-    iframe.style.setProperty("width", "100%", "important");
-    iframe.style.setProperty("height", "100%", "important");
-    iframe.style.setProperty("backgroundColor", "rgb(0, 0, 0)", "important");
-    iframe.style.setProperty("boxShadow", "rgba(0, 0, 0, 0.176) 0px 1rem 3rem", "important");
-    iframe.style.setProperty("display", "flex", "important");
-    iframe.style.setProperty("borderWidth", "0px", "important");
-    iframe.style.setProperty("overflow", "hidden", "important");
-
-    var open_btn = document.createElement('button');
-    open_btn.setAttribute('id', 'learning_popup_open');
-    open_btn.innerHTML = "팝업열기";
-
-    var close_btn = document.createElement('button')
-    close_btn.setAttribute('id', 'learning_popup_open');
-    close_btn.innerHTML = "팝업닫기"
-    
     var lecmind_container = document.querySelector('#lecmind_container')
-    while (lecmind_container.hasChildNodes()) {
-        lecmind_container.removeChild(lecmind_container.firstChild);
-    }
-    lecmind_container.appendChild(iframe)
-    lecmind_container.appendChild(open_btn)
-    lecmind_container.appendChild(close_btn)
+    var lecmind_layer = document.querySelector('#lecmind_layer')
+
+    // loading
+    var loading_url = 'https://drive.google.com/uc?export=download&id=1XCngqyGNxZVrFzSw0mxM8yIEpIqJry6L'
+    var loading_panel = document.createElement('div')
+    var loading_gif = document.createElement('img')
+
+    loading_panel.setAttribute('id', 'loading_panel')
+    loading_panel.style.position = 'absolute';
+    loading_panel.style.backgroundColor = "white"
+    loading_panel.style.width = "300px"
+    loading_panel.style.height = "50px"
+    loading_panel.style.borderRadius = "20px"
+    loading_panel.style.top = (window.innerHeight / 2 - 250)+ 'px'
+    loading_panel.style.left = (window.innerWidth / 2 - 150)+ 'px'
+    loading_panel.style.boxShadow = "2px 3px 5px 0px";
+    loading_panel.style.textAlign = "center";
+    loading_panel.innerHTML += '<div id="guide_text" style="margin-top: 15px;"><h2>잠시만 기다려주세요!</h2></div>'
+    loading_gif.setAttribute('src', loading_url)
+    loading_gif.style.position = 'relative';
+    loading_gif.style.marginTop = '60px'
     
+    while (lecmind_layer.hasChildNodes()) {
+        lecmind_layer.removeChild(lecmind_layer.firstChild);
+    }
+    loading_panel.appendChild(loading_gif)
+    lecmind_layer.appendChild(loading_panel)
+    lecmind_layer.style.backgroundColor= 'white'
+
+    //load learningPage
+    setTimeout(() => {
+        var iframe = document.createElement('iframe')
+        iframe.setAttribute('src', `http://127.0.0.1:8000/learning/${video_id}`);
+        iframe.style.setProperty("position", "absolute", "important");
+        iframe.style.setProperty("top", "50%", "important");
+        iframe.style.setProperty("left", "50%", "important");
+        iframe.style.setProperty("transform", "translate(-50%, -50%)", "important");
+        iframe.style.setProperty("width", "100%", "important");
+        iframe.style.setProperty("height", "100%", "important");
+        iframe.style.setProperty("backgroundColor", "rgb(0, 0, 0)", "important");
+        iframe.style.setProperty("boxShadow", "rgba(0, 0, 0, 0.176) 0px 1rem 3rem", "important");
+        iframe.style.setProperty("display", "flex", "important");
+        iframe.style.setProperty("borderWidth", "0px", "important");
+        iframe.style.setProperty("overflow", "hidden", "important");
+        
+        // img url
+        const close_btn_url = 'https://drive.google.com/uc?export=download&id=1-bssq5ahdNM23fhGwjM57Pf-njJL4Usc';
+        const expand_btn_url = 'https://drive.google.com/uc?export=download&id=1qPnjOOudToH6TsMVqPGxk53Mg0A7f-tm';
+        const show_btn_url = 'https://drive.google.com/uc?export=download&id=16EedLOxEhzJi_KDW8UpN1ZynwG0sF4mF';
+        // 닫기 버튼
+        var lecmind_viewer_close_btn = document.createElement('img');
+        lecmind_viewer_close_btn.setAttribute('id', 'lecmind_viewer_close_btn');
+        lecmind_viewer_close_btn.setAttribute('src', close_btn_url);
+        lecmind_viewer_close_btn.style.cursor = 'pointer';
+        lecmind_viewer_close_btn.style.width = '25px';
+        lecmind_viewer_close_btn.style.display = 'inline';
+        lecmind_viewer_close_btn.style.setProperty('margin-right', '0.3rem', 'important')
+        lecmind_viewer_close_btn.onclick = () => viewer_close()
+
+        // 전체화면 버튼
+        var lecmind_viewer_screen_btn = document.createElement('img');
+        lecmind_viewer_screen_btn.setAttribute('id', 'lecmind_viewer_screen_btn');
+        lecmind_viewer_screen_btn.setAttribute('src', expand_btn_url);
+        lecmind_viewer_screen_btn.style.cursor = 'pointer';
+        lecmind_viewer_screen_btn.style.width = '25px';
+        lecmind_viewer_screen_btn.style.display = 'inline';
+        lecmind_viewer_screen_btn.style.setProperty('margin-right', '0.3rem', 'important')
+        lecmind_viewer_screen_btn.onclick = () => viewer_setScreenMode();
+
+        // 상태 버튼
+        var lecmind_viewer_show_btn = document.createElement('img');
+        lecmind_viewer_show_btn.setAttribute('id', 'lecmind_viewer_show_btn');
+        lecmind_viewer_show_btn.setAttribute('src', show_btn_url);
+        lecmind_viewer_show_btn.style.cursor = 'pointer';
+        lecmind_viewer_show_btn.style.width = '25px';
+        lecmind_viewer_show_btn.style.display = 'inline';
+        lecmind_viewer_show_btn.onclick = () => viewer_setShowMode();
+
+        var lecmind_viewer_controller = document.createElement('div')
+        lecmind_viewer_controller.setAttribute('id', `lecmind_viewer_controller`);
+        lecmind_viewer_controller.style.zIndex = 2147483647
+        lecmind_viewer_controller.style.position = 'fixed';
+        lecmind_viewer_controller.style.top = '20px';
+        lecmind_viewer_controller.style.left = '20px';
+        lecmind_viewer_controller.style.boxShadow = 'rgba(0, 0, 0, 0.15) 0px 0.5rem 1rem';
+        lecmind_viewer_controller.style.backgroundColor = 'rgb(65, 65, 65)';
+        lecmind_viewer_controller.style.borderRadius = '5px';
+        lecmind_viewer_controller.style.setProperty("padding", "0.5rem", "important");
+        lecmind_viewer_controller.appendChild(lecmind_viewer_close_btn)
+        lecmind_viewer_controller.appendChild(lecmind_viewer_screen_btn)
+        lecmind_viewer_controller.appendChild(lecmind_viewer_show_btn)
+
+        while (lecmind_layer.hasChildNodes()) {
+            lecmind_layer.removeChild(lecmind_layer.firstChild);
+        }
+        lecmind_container.appendChild(lecmind_viewer_controller)
+        lecmind_layer.appendChild(iframe)
+    }, 3000);
 }
 
-function open () {
-    chrome.tabs.query({ currentWindow: true, active: true }, function(tabs) {
-        id = tabs[0].id
-        chrome.scripting.executeScript({target: { tabId: id }, func: deleteSelectArea})
-    });
-}
-
-function close () {
-    chrome.tabs.query({ currentWindow: true, active: true }, function(tabs) {
-        id = tabs[0].id
-        chrome.scripting.executeScript({target: { tabId: id }, func: deleteSelectArea})
-    });
-}
 
 
 function deleteSelectArea() {
@@ -193,23 +238,25 @@ function selectVideo(token) {
         lecmind_guide_container.style.justifyContent = 'center';
         lecmind_guide_container.style.alignItems = 'center';
 
+        var lecmind_layer = document.createElement('div'); 
+        lecmind_layer.setAttribute('id', 'lecmind_layer');
+        lecmind_layer.style.zIndex= 2147483644;
+        lecmind_layer.style.position= 'fixed';
+        lecmind_layer.style.top= '0px';
+        lecmind_layer.style.left= '0px';
+        lecmind_layer.style.width= '100vw';
+        lecmind_layer.style.height= '100vh';
+        lecmind_layer.style.backgroundColor= 'rgba(206, 212, 218, 0.5)';
+        lecmind_layer.style.cursor= 'not-allowed';
+
         var lecmind_container = document.createElement('div'); 
         lecmind_container.setAttribute('id', 'lecmind_container');
-        lecmind_container.style.zIndex= 2147483644;
-        lecmind_container.style.position= 'fixed';
-        lecmind_container.style.top= '0px';
-        lecmind_container.style.left= '0px';
-        lecmind_container.style.width= '100vw';
-        lecmind_container.style.height= '100vh';
-        lecmind_container.style.backgroundColor= 'rgba(206, 212, 218, 0.5)';
-        lecmind_container.style.cursor= 'not-allowed';
-
-        
 
         lecmind_guide_container.appendChild(lecmind_video_layer)
         lecmind_guide_container.appendChild(lecmind_video_btn)
         lecmind_guide_container.appendChild(lecmind_guide_panel)
-        lecmind_container.appendChild(lecmind_guide_container)
+        lecmind_layer.appendChild(lecmind_guide_container)
+        lecmind_container.appendChild(lecmind_layer)
         document.body.appendChild(lecmind_container)
     } 
 }
