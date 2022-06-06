@@ -43,19 +43,29 @@ const onLoginSuccess = response => {
 
 function Popup(){
     return (
+        // <div class="popup">
+        //     <div class="popup_title">Lecmind</div>
+        //     <div class="signin">
+        //         <div class="input-box">
+        //             <label>Enter id</label><br />
+        //             <input type="text" id="id" name="id" placeholder="id"></input><br />
+        //             <label>Enter password</label><br />
+        //             <input type="password" id="pass" name="password" placeholder="password"></input><br />
+        //             <button id="signin_btn" value="Login" onClick={login}>Sign In</button>
+        //         </div>
+        //         <div class="signup">
+        //             아직 Lecmind 회원이 아니신가요? 
+        //             <button id="signup_btn" onClick={(e)=>{chrome.tabs.create({url: 'http://127.0.0.1:8000/signin'});}}>회원가입</button>
+        //         </div>
+        //     </div>
+        // </div>
         <div class="popup">
             <div class="popup_title">Lecmind</div>
             <div class="signin">
-                <div class="input-box">
-                    <label>Enter id</label><br />
-                    <input type="text" id="id" name="id" placeholder="id"></input><br />
-                    <label>Enter password</label><br />
-                    <input type="password" id="pass" name="password" placeholder="password"></input><br />
-                    <button id="signin_btn" value="Login" onClick={login}>Sign In</button>
-                </div>
+            <button id="signin_btn" value="Login"onClick={(e)=>{chrome.tabs.create({url: 'http://127.0.0.1:8000/signin'});}}>Sign In</button>
                 <div class="signup">
                     아직 Lecmind 회원이 아니신가요? 
-                    <button id="signup_btn" onClick={(e)=>{chrome.tabs.create({url: 'http://127.0.0.1:8000/signin'});}}>회원가입</button>
+                    <button id="signup_btn" onClick={(e)=>{chrome.tabs.create({url: 'http://127.0.0.1:8000/signup'});}}>회원가입</button>
                 </div>
             </div>
         </div>

@@ -16,6 +16,10 @@ function getCookie(name) {
     return cookieValue;
 }
 
+function getSession(name) {
+    return getCookie(name)
+}
+
 function viewer_close () {
     document.body.querySelector('#lecmind_container').remove()
 }
@@ -278,6 +282,10 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
             var url = tabs[0].url
             var video_id = url.split('=')[1]
             chrome.scripting.executeScript({target: { tabId: id }, func: setLecture, args: [token, video_id]})
+        }
+        else if (message.type === 'getSession') {
+            chrome.scripting.executeScript({target: { tabId: id }, func: getSession, args: ['sessionid']}, (e) => {sendResponse({value: e})})
+            
         }
     });
     return true;
