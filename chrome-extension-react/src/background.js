@@ -16,10 +16,6 @@
 //     return cookieValue;
 // }
 
-function getSession(name) {
-    return getCookie(name)
-}
-
 function viewer_close () {
     document.body.querySelector('#lecmind_container').remove()
 }
@@ -188,7 +184,7 @@ function deleteSelectArea() {
     document.body.removeChild(target)
 }
 
-function selectVideo(token) {
+function selectVideo() {
     videos = document.getElementsByTagName('video')
     if (videos.length != 0) {
         var element = videos[0].getBoundingClientRect();
@@ -216,7 +212,7 @@ function selectVideo(token) {
         lecmind_video_btn.style.cursor = 'pointer';
         lecmind_video_btn.setAttribute('id', "lecmind_video_btn")
         lecmind_video_btn.setAttribute('src', "https://cdn-icons-png.flaticon.com/128/149/149125.png")
-        lecmind_video_btn.onclick = (e) => chrome.runtime.sendMessage({type: "setLecture", token : token}, response => {console.log("setLecture");})
+        lecmind_video_btn.onclick = (e) => chrome.runtime.sendMessage({type: "setLecture"}, response => {console.log("setLecture");})
 
         var lecmind_guide_panel = document.createElement('div')
         lecmind_guide_panel.setAttribute('id', 'lecmind_guide_panel')
@@ -272,20 +268,14 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
         const id = tabs[0].id
         if (message.type === 'selectVideo') {
             sendResponse({work: 'welcome!'})
-            var token = message.token
-            chrome.scripting.executeScript({target: { tabId: id }, func: selectVideo, args: [token]})
+            chrome.scripting.executeScript({target: { tabId: id }, func: selectVideo})
             //chrome.scripting.executeScript({target: { tabId: id}, files: [injectedScript.bundle.js]})
         }
         else if (message.type === 'setLecture') {
             sendResponse({work: 'welcome!'})
-            var token = message.token
             var url = tabs[0].url
             var video_id = url.split('=')[1]
-            chrome.scripting.executeScript({target: { tabId: id }, func: setLecture, args: [token, video_id]})
-        }
-        else if (message.type === 'getSession') {
-            chrome.scripting.executeScript({target: { tabId: id }, func: getSession, args: ['sessionid']}, (e) => {sendResponse({value: e})})
-            
+            chrome.scripting.executeScript({target: { tabId: id }, func: setLecture, args: [video_id]})
         }
     });
     return true;
