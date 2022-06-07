@@ -15,9 +15,22 @@ chrome.cookies.get(
     url: "http://127.0.0.1:8000",
   },
   (cookie) => {
-    cookie
-      ? render(<PopupSignedIn />, document.querySelector("#popup"))
-      : render(<Popup />, document.querySelector("#popup"));
+    if (cookie) {
+      Cookies.set("sessionid", cookie.value);
+      chrome.cookies.get(
+        {
+          name: "Authorization",
+          url: "http://127.0.0.1:8000",
+        },
+        (authorization) => {
+          console.log(authorization.value);
+          Cookies.set("Authorization", authorization.value);
+        }
+      );
+      render(<PopupSignedIn />, document.querySelector("#popup"));
+    } else {
+      render(<Popup />, document.querySelector("#popup"));
+    }
   }
 );
 
