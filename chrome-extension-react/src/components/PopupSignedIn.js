@@ -26,6 +26,7 @@ const onSilentRefresh = () => {
 
 const onLoginSuccess = response => {
     const accessToken = response.data.token;
+    console.log(accessToken, '!')
     Cookies.set('Authorization', accessToken)
     axios.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`;
     setTimeout(onSilentRefresh, JWT_EXPIRY_TIME - 60000);

@@ -23,7 +23,6 @@ chrome.cookies.get(
           url: "http://127.0.0.1:8000",
         },
         (authorization) => {
-          console.log(authorization.value);
           Cookies.set("Authorization", authorization.value);
         }
       );

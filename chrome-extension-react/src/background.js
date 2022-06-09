@@ -53,17 +53,14 @@ function viewer_setShowMode () {
 
 function setLecture(token, video_id) {
     // const csrftoken = getCookie('csrftoken')
+    console.log(token)
     fetch(`http://127.0.0.1:8000/api/lecture/`, {
         method: 'POST',
         body: JSON.stringify({
             video_id: video_id,
-            name: "temp",
-            degree: null,
-            complet_date: null,
-            lecture_time: null,
-            learning_time: null,
+            student: "admin",
+            subject: "과목 미지정",
             state: "ongoing",
-            subject: "temp"
         }),
         headers: {
             "Content-Type": "application/json",
@@ -184,7 +181,7 @@ function deleteSelectArea() {
     document.body.removeChild(target)
 }
 
-function selectVideo() {
+function selectVideo(token) {
     videos = document.getElementsByTagName('video')
     if (videos.length != 0) {
         var element = videos[0].getBoundingClientRect();
@@ -196,7 +193,7 @@ function selectVideo() {
         // var lecture_layer = document.createElement('div');
         // lecture_layer.setAttribute(id, 'lecture_layer')
         // lecture_layer.appendChild(lecmind_layout)
-
+        const play_btn_url = 'https://drive.google.com/uc?export=download&id=1Qcn6JKebzY-vbSzwa1vR8xFM2zfQW7Xl';
         var lecmind_video_layer = document.createElement('img');
         lecmind_video_layer.setAttribute('id', 'lecmind_video_layer')
         lecmind_video_layer.setAttribute('src', "https://png.pngtree.com/background/20210714/original/pngtree-dark-blue-solid-color-background-wallpaper-picture-image_1219002.jpg")
@@ -204,15 +201,15 @@ function selectVideo() {
         lecmind_video_layer.style.width = element.width + 'px';
         lecmind_video_layer.style.height = element.height + 'px';
         lecmind_video_layer.style.opacity = '0.4'
-
         var lecmind_video_btn = document.createElement('img');
         lecmind_video_btn.style.position = 'absolute';
         lecmind_video_btn.style.top = (element.height / 2 - 64) + 'px'
         lecmind_video_btn.style.left = (element.width / 2 - 64) + 'px'
+        lecmind_video_btn.style.width = '128px';
         lecmind_video_btn.style.cursor = 'pointer';
         lecmind_video_btn.setAttribute('id', "lecmind_video_btn")
-        lecmind_video_btn.setAttribute('src', "https://cdn-icons-png.flaticon.com/128/149/149125.png")
-        lecmind_video_btn.onclick = (e) => chrome.runtime.sendMessage({type: "setLecture"}, response => {console.log("setLecture");})
+        lecmind_video_btn.setAttribute('src', play_btn_url)
+        lecmind_video_btn.onclick = (e) => chrome.runtime.sendMessage({type: "setLecture",  token: token}, response => {console.log("setLecture");})
 
         var lecmind_guide_panel = document.createElement('div')
         lecmind_guide_panel.setAttribute('id', 'lecmind_guide_panel')
@@ -268,14 +265,16 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
         const id = tabs[0].id
         if (message.type === 'selectVideo') {
             sendResponse({work: 'welcome!'})
-            chrome.scripting.executeScript({target: { tabId: id }, func: selectVideo})
+            var token = message.token
+            chrome.scripting.executeScript({target: { tabId: id }, func: selectVideo, args: [token]})
             //chrome.scripting.executeScript({target: { tabId: id}, files: [injectedScript.bundle.js]})
         }
         else if (message.type === 'setLecture') {
             sendResponse({work: 'welcome!'})
+            var token = message.token
             var url = tabs[0].url
             var video_id = url.split('=')[1]
-            chrome.scripting.executeScript({target: { tabId: id }, func: setLecture, args: [video_id]})
+            chrome.scripting.executeScript({target: { tabId: id }, func: setLecture, args: [token, video_id]})
         }
     });
     return true;
